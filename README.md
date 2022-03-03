@@ -43,7 +43,7 @@ mix
             width:411,
             height:823,
             penthouse: {
-                timeout12000000
+                timeout: 12000000
             }
         },
     });
