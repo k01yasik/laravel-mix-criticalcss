@@ -7,10 +7,10 @@ class Critical {
 
     dependencies() {
         this.requiresReload = `
-            HTML Webpack critical has been installed. Please run "npm run dev" again.
+            Critical-Css-Webpack-Plugin has been installed. Please run "npm run dev" again.
         `;
 
-        return ['html-critical-webpack-plugin'];
+        return ['critical-css-webpack-plugin'];
     }
 
     register(config) {
@@ -20,12 +20,14 @@ class Critical {
             );
         }
 
-        const critical = Object.assign({
+        const critical = {...{
             enabled: mix.inProduction(),
             paths: {},
             urls: [],
-            options: {},
-        }, config);
+            options: {
+                inline:false
+            },
+        }, ...config};
 
         if (critical.paths.suffix == null) critical.paths.suffix = '_critical.min';
 
@@ -34,14 +36,14 @@ class Critical {
 
     webpackPlugins() {
         if (this.criticals.map((e) => e.enabled).some(Boolean)) {
-            const HtmlCritical = require('html-critical-webpack-plugin');
+            const CriticalCssPlugin = require('critical-css-webpack-plugin');
             const plugins = [];
 
             this.criticals.forEach((critical) => {
 
                 critical.enabled && critical.urls.forEach((template) => {
                     const criticalSrc = critical.paths.base + template.url;
-                    const criticalDest = `${critical.paths.templates + template.template + critical.paths.suffix  }.css`;
+                    const criticalDest = `${critical.paths.templates + template.template + critical.paths.suffix}.css`;
 
                     if (criticalSrc.indexOf('amp_') !== -1) {
 
@@ -50,10 +52,11 @@ class Critical {
 
                     }
 
-                    plugins.push(new HtmlCritical(Object.assign({
+                    plugins.push(new CriticalCssPlugin({...{
                         src: criticalSrc,
                         dest: criticalDest,
-                    }, critical.options)));
+                        target: criticalDest,
+                    }, ...critical.options}));
                 });
 
             })
