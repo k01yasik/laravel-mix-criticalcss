@@ -39,7 +39,7 @@ mix
         ],
         //Now using https://github.com/addyosmani/critical v4.0.1
         options: {
-            //It's important to note here you shoul NOT set inline:true, this will break the whole system.
+            //It's important to note here you should NOT set inline:true, this will break the whole system.
             width:411,
             height:823,
             penthouse: {
