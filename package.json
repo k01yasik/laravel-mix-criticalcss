@@ -4,7 +4,8 @@
   "description": "A Laravel Mix extension for Critical CSS.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-compile": "npx tsc index.ts --target esnext --lib esnext --moduleResolution node"
   },
   "repository": {
     "type": "git",
